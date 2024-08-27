@@ -16,6 +16,14 @@ Then to run Powershell:
 pwsh
 ```
 
+#### Install Entra PowerShel
+
+```
+Install-Module -Name Microsoft.Graph.Entra -AllowPrerelease -Repository PSGallery -Force
+```
+
+Not needed ?
+
 ### Find 'adobe.com' users
 
 ```
