@@ -16,13 +16,17 @@ Then to run Powershell:
 pwsh
 ```
 
-#### Install Entra PowerShel
+#### Install Entra powershell module
 
 ```
 Install-Module -Name Microsoft.Graph.Entra -AllowPrerelease -Repository PSGallery -Force
 ```
 
-Not needed ?
+#### Install MicrosoftTeams powershell module
+
+```
+Install-Module -Name MicrosoftTeams
+```
 
 ### Find 'adobe.com' users
 
@@ -41,3 +45,15 @@ Set-MgUserPhotoContent -UserId xyz -InFile "./logo.png"
 ### Update avatar for all users
 
 See [](./update-users.ps1) script.
+
+### Get all teams
+
+```
+Get-EntraGroup -All
+```
+
+### Get teams' channels
+
+```
+Get-TeamAllChannel -GroupId <channel_group_id>
+```
