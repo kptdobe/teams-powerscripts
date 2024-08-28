@@ -6,7 +6,8 @@ $company = "Adobe"
 Connect-MgGraph -Scopes 'User.ReadWrite.All' -NoWelcome
 Connect-Entra -Scopes 'User.ReadWrite.All' -NoWelcome
 
-$users = Get-MgUser -Filter "endsWith(mail,'adobe.com')" -ConsistencyLevel eventual -CountVariable countVar
+# $users = Get-MgUser -Filter "endsWith(mail,'adobe.com')" -ConsistencyLevel eventual -CountVariable countVar
+$users = Get-MgUser -Filter "endsWith(mail,'@adobe.com') and NOT(CompanyName eq 'Adobe')" -ConsistencyLevel eventual -CountVariable countVar
 
 foreach($user in $users){
     try {
