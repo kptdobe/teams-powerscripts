@@ -1,13 +1,15 @@
 
 
-$photo = (Get-Item .).FullName + "/logo.png"
+# $photo = (Get-Item .).FullName + "/adobe-logo.png"
+$photo = (Get-Item .).FullName + "/helix-logo.png"
 $company = "Adobe"
 
 Connect-MgGraph -Scopes 'User.ReadWrite.All' -NoWelcome
 Connect-Entra -Scopes 'User.ReadWrite.All' -NoWelcome
 
 # $users = Get-MgUser -Filter "endsWith(mail,'adobe.com')" -ConsistencyLevel eventual -CountVariable countVar
-$users = Get-MgUser -Filter "endsWith(mail,'@adobe.com') and NOT(CompanyName eq 'Adobe')" -ConsistencyLevel eventual -CountVariable countVar
+# $users = Get-MgUser -Filter "endsWith(mail,'@adobe.com') and NOT(CompanyName eq 'Adobe')" -ConsistencyLevel eventual -CountVariable countVar
+$users = Get-MgUser -Filter "endsWith(mail,'@AdobeEnterpriseSupportAEM.onmicrosoft.com') and startsWith(DisplayName,'admin')" -ConsistencyLevel eventual -CountVariable countVar
 
 foreach($user in $users){
     try {
