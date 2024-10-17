@@ -1,14 +1,16 @@
-
-
 $photo = (Get-Item .).FullName + "/adobe-logo.png"
 # $photo = (Get-Item .).FullName + "/helix-logo.png"
 $company = "Adobe"
 
 Connect-MgGraph -Scopes 'User.ReadWrite.All' -NoWelcome
-Connect-Entra -Scopes 'User.ReadWrite.All' -NoWelcome
 
-# $users = Get-MgUser -Filter "endsWith(mail,'adobe.com')" -ConsistencyLevel eventual -CountVariable countVar
+# all adobe user with email ends with @adobe.com but not company set
 $users = Get-MgUser -Filter "endsWith(mail,'@adobe.com') and NOT(CompanyName eq 'Adobe')" -ConsistencyLevel eventual -CountVariable countVar
+
+# all adobe user with email ends with @adobe.com
+# $users = Get-MgUser -Filter "endsWith(mail,'adobe.com')" -ConsistencyLevel eventual -CountVariable countVar
+
+# all AdobeEnterpriseSupportAEM users start with admin
 # $users = Get-MgUser -Filter "endsWith(mail,'@AdobeEnterpriseSupportAEM.onmicrosoft.com') and startsWith(DisplayName,'admin')" -ConsistencyLevel eventual -CountVariable countVar
 
 foreach($user in $users){
@@ -18,17 +20,17 @@ foreach($user in $users){
       $mail = $user.Mail
       $id = $user.Id
 
-      Set-EntraUserThumbnailPhoto -UserId $id -FilePath $photo
-      if ($res) {
-        Write-Host "Updating in Entra: $username's photo has been updated!"
+      $res = Set-MgUserPhotoContent -UserId $id -InFile $photo
+      if ($res = $true) {
+        Write-Host "Updating user: $username's photo has been updated!"
       } else {
+        Write-Host "Updating user: $username's photo has failed! Stopping process. Error: $res"
         exit;
       }
 
       Update-MgUser -UserId $id -CompanyName $company
-      Write-Host "Updating in Entra: $username's company has been updated!"
-    }
-    catch {
+      Write-Host "Updating user: $username's company has been updated!"
+    } catch {
        Write-Host $Error
     }
 }
