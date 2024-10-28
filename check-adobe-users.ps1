@@ -4,7 +4,7 @@ $company = "Adobe"
 Connect-MgGraph -Scopes 'User.ReadWrite.All' -NoWelcome
 
 # all adobe user with email ends with @adobe.com but not company set
-$users = Get-MgUser -Filter "endsWith(mail,'@adobe.com')" -ConsistencyLevel eventual -CountVariable countVar
+$users = Get-MgUser -Filter "endsWith(mail,'@adobe.com')" -All -ConsistencyLevel eventual -CountVariable countVar
 
 # all adobe user with email ends with @adobe.com
 # $users = Get-MgUser -Filter "endsWith(mail,'adobe.com')" -ConsistencyLevel eventual -CountVariable countVar
