@@ -16,17 +16,17 @@ foreach($user in $users){
       $mail = $user.Mail
       $id = $user.Id
 
-      $res = Set-MgUserPhotoContent -UserId $id -InFile $photo
-      if ($res = $true) {
+      $errOutput = $( $output = & Set-MgUserPhotoContent -UserId $id -InFile $photo ) 2>&1
+      if (!$errOutput) {
         Write-Host "Updating user: $username's photo has been updated!"
+        
+        Update-MgUser -UserId $id -CompanyName $company
+        Write-Host "Updating user: $username's company has been updated!"
       } else {
-        Write-Host "Updating user: $username's photo has failed! Stopping process. Error: $res"
-        exit;
+        Write-Host "Updating user: $username's photo has failed! Stopping process. Error: $errOutput"
       }
-
-      Update-MgUser -UserId $id -CompanyName $company
-      Write-Host "Updating user: $username's company has been updated!"
     } catch {
        Write-Host $Error
+       exit;
     }
 }
