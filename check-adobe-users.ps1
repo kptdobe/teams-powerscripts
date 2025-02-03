@@ -18,11 +18,11 @@ foreach($user in $users){
       $comppany = $user.CompanyName
 
       if ($company -ne "Adobe") {
-        Write-Host "$username's company is not Adobe: $company."
+        Write-Host " $username company is not Adobe: $company."
       }
 
       if ($username + "@adobe.com" -eq $mail) {
-        Write-Host "$username's displayName is equal to id. Needs to be manually updated."
+        Write-Host " $username displayName is equal to id. Needs to be manually updated."
       }
       
       
